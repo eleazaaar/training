@@ -3,12 +3,14 @@
         $('#table-logged-session').DataTable({
             ajax: {
                 method: 'POST',
-                url: "<?php echo base_url(); ?>index.php/User/getUserData",
+                url: "<?php echo base_url(); ?>index.php/User/getUserDataForLoggedSession",
             },
             columns: [{
-                data: "name"
+                data: "location"
             }, {
-                data: "email"
+                data: "ip_address"
+            }, {
+                data: "browser"
             }, {
                 data: "time_in"
             }, {
@@ -20,15 +22,9 @@
         $('#table-attendance').DataTable({
             ajax: {
                 method: 'POST',
-                url: "<?php echo base_url(); ?>index.php/User/getUserData",
+                url: "<?php echo base_url(); ?>index.php/User/getUserDataForAttendance",
             },
             columns: [{
-                data: "location"
-            }, {
-                data: "ip_address"
-            }, {
-                data: "browser"
-            }, {
                 data: "time_in"
             }, {
                 data: "time_out"

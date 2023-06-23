@@ -12,7 +12,7 @@ class User_ extends CI_Model
         $this->load->helper('url', 'form');
     }
 
-    public function getUserData()
+    public function getUserDataForLoggedSession()
     {
         $this->db->select('*');
         $this->db->from('user_data');
@@ -29,7 +29,29 @@ class User_ extends CI_Model
             $timeOut = $value->time_out != "0000-00-00 00:00:00" ? date_format(date_create($value->time_out), "l F d, Y - h:i A") : "";
             $country = $value->country == 'PH' ? 'Phillipines' : '';
             $location = $country . ', ' . $value->city;
-            $values = array("name" => $name, "email" => $value->email, "time_in" => $timeIn, "time_out" => $timeOut, "location" => $location, "ip_address" => $value->ip_address, "browser" => $value->browser);
+            $values = array("time_in" => $timeIn, "time_out" => $timeOut, "location" => $location, "ip_address" => $value->ip_address, "browser" => $value->browser);
+            array_push($result, $values);
+        }
+
+        echo json_encode(array('data' => $result));
+    }
+
+    public function getUserDataForAttendance()
+    {
+        $this->db->select('*');
+        $this->db->from('user_data');
+        $this->db->join('user', 'user.id = user_data.user_id');
+        $this->db->where('user_data.user_id', $_SESSION['user_id']);
+        $this->db->order_by('time_in', 'desc');
+        $query = $this->db->get();
+
+        $result = [];
+
+        foreach ($query->result() as $value) {
+            $name = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
+            $timeIn = date_format(date_create($value->time_in), "l F d, Y - h:i A");
+            $timeOut = $value->time_out != "0000-00-00 00:00:00" ? date_format(date_create($value->time_out), "l F d, Y - h:i A") : "";
+            $values = array("time_in" => $timeIn, "time_out" => $timeOut);
             array_push($result, $values);
         }
 
@@ -235,6 +257,18 @@ class User_ extends CI_Model
             // print_r($result);
 
             return $result->time_out_image == "" ? $result->time_in_image : $result->time_out_image;
+        }
+    }
+
+    public function setSchedule()
+    {
+        // $user = array("id" => $_SESSION['user_id'], "day" => );
+
+        // $query = $this->db->get_where('user', $user);
+
+        // print_r($_POST);
+        foreach ($_POST as $value) {
+            print_r($value);
         }
     }
 }

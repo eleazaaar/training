@@ -20,9 +20,6 @@
         <table class="table table-bordered table-striped dataTable dtr-inline p-3" id="table-attendance">
             <thead>
                 <tr>
-                    <th class="sorting sorting_desc">Location</th>
-                    <th>IP Address</th>
-                    <th>Browser</th>
                     <th>Time In</th>
                     <th>Time Out</th>
                 </tr>

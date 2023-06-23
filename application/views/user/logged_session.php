@@ -23,8 +23,9 @@
         <table class="table table-bordered table-striped dataTable dtr-inline p-3" id="table-logged-session">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>Location</th>
+                    <th>IP Adress</th>
+                    <th>Browser</th>
                     <th>Time In</th>
                     <th>Time Out</th>
                 </tr>

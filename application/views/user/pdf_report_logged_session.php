@@ -23,9 +23,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
     <div class="container bg-light p-3">
-        <table class="table table-bordered table-striped dataTable dtr-inline p-3" id="table-user">
+        <table class="table table-bordered table-striped dataTable dtr-inline p-3">
             <thead>
                 <tr>
+                    <th>Location</th>
                     <th>IP Address</th>
                     <th>Browser</th>
                     <th>Time In</th>
@@ -36,11 +37,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <?php
                 foreach ($data as $value) {
                     echo '<tr>
+                        <td>' . $value['location'] . '</td>
                         <td>' . $value['ip_address'] . '</td>
                         <td>' . $value['browser'] . '</td>
                         <td>' . $value['time_in'] . '</td>
                         <td>' . $value['time_out'] . '</td>
-                    ';
+                    </tr>';
                 }
                 ?>
             </tbody>

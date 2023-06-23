@@ -24,6 +24,9 @@
                         <a href="<?php echo site_url('User/attendance') ?>">
                             <i class="fa fa-user"></i> Attendance
                         </a>
+                        <a href="<?php echo site_url('User/schedule') ?>">
+                            <i class="fa fa-calendar"></i> Schedule
+                        </a>
                         <a href="<?php echo site_url('User/logged_session') ?>">
                             <i class="fa fa-history"></i> Logged Session
                         </a>

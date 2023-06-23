@@ -67,9 +67,14 @@ class User extends CI_Controller
         }
     }
 
-    public function getUserData()
+    public function getUserDataForAttendance()
     {
-        $this->User_->getUserData();
+        $this->User_->getUserDataForAttendance();
+    }
+
+    public function getUserDataForLoggedSession()
+    {
+        $this->User_->getUserDataForLoggedSession();
     }
 
     public function generatePDFLoggedSession()
@@ -136,5 +141,30 @@ class User extends CI_Controller
         move_uploaded_file($file_tmp, $file_destination);
 
         echo $file_name;
+    }
+
+    public function schedule()
+    {
+        $this->load->library('session');
+
+        $data = ["title" => " | Attendance"];
+
+        if (isset($_SESSION['training_system'])) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/nav_bar');
+            $this->load->view('user/schedule');
+            $this->load->view('template/required_script');
+            $this->load->view('user/ajax');
+            $this->load->view('jquery/jquery');
+            $this->load->view('template/footer');
+        } else {
+            redirect(base_url('index.php/Page/index'));
+        }
+    }
+
+    public function setSchedule()
+    {
+        $this->User_->setSchedule();
+        // print_r($_POST);
     }
 }
