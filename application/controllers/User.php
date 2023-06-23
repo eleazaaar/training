@@ -1,12 +1,70 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+require FCPATH . 'vendor/autoload.php';
 class User extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model('User_');
+        $this->load->library('user_agent');
+    }
+
+    public function index()
+    {
+        if (isset($_SESSION['training_system'])) {
+            $image = $this->getLastImage();
+
+            $data = ["title" => " | Home"];
+            $image = ["image" => $image];
+
+            $this->load->view('template/header', $data);
+            $this->load->view('template/nav_bar');
+            $this->load->view('user/index', $image);
+            $this->load->view('template/required_script');
+            $this->load->view('jquery/jquery');
+            $this->load->view('template/footer');
+        } else {
+            redirect(base_url('index.php/Page/index'));
+        }
+    }
+
+    public function logged_session()
+    {
+        $this->load->library('session');
+
+        $data = ["title" => " | Session"];
+
+        if (isset($_SESSION['training_system'])) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/nav_bar');
+            $this->load->view('user/logged_session');
+            $this->load->view('template/required_script');
+            $this->load->view('user/ajax');
+            $this->load->view('jquery/jquery');
+            $this->load->view('template/footer');
+        } else {
+            redirect(base_url('index.php/Page/index'));
+        }
+    }
+
+    public function attendance()
+    {
+        $this->load->library('session');
+
+        $data = ["title" => " | Attendance"];
+
+        if (isset($_SESSION['training_system'])) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/nav_bar');
+            $this->load->view('user/attendance');
+            $this->load->view('template/required_script');
+            $this->load->view('user/ajax');
+            $this->load->view('jquery/jquery');
+            $this->load->view('template/footer');
+        } else {
+            redirect(base_url('index.php/Page/index'));
+        }
     }
 
     public function getUserData()
@@ -14,53 +72,69 @@ class User extends CI_Controller
         $this->User_->getUserData();
     }
 
-    public function createPDF()
+    public function generatePDFLoggedSession()
     {
-        $result = $this->User_->getDataForReports();
+        $from = $this->input->post('date-from') != "" ? $this->input->post('date-from') : "";
+        $to = $this->input->post('date-to') != "" ? date("Y-m-d", strtotime('+1 day', strtotime($this->input->post('date-to')))) : "";
 
-        $this->load->library('pdf');
-        $dompdf = new PDF();
+        $data['data'] = $this->User_->getUserDataForLoggedSessionReport($from, $to);
 
-        $content = '';
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('user/pdf_report_logged_session', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
 
-        $content .= '
-            <h1 style="text-align: center">Attendance</h1>
-            <pre>
-                <table border="1px solid" style="">
-                    <thead>
-                        <tr>
-                            <th style="padding: 4px" width="225px">Name</th>
-                            
-                            <th style="padding: 4px" width="225px">Time In</th>
-                            <th style="padding: 4px" width="225px">Time Out</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        ';
+    public function generatePDFAttendance()
+    {
+        $from = $this->input->post('attendance-date');
+        $to = date("Y-m-d", strtotime('+1 day', strtotime($from)));
 
-        foreach ($result as $value) {
-            $content .=
-                '<tr>
-                    <td style="padding: 4px">' . $value['name'] . '</td>
-                
-                    <td style="padding: 4px">' . $value['time_in'] . '</td>
-                    <td style="padding: 4px">' . $value['time_out'] . '</td>
-                </tr>';
-        }
+        $data['data'] = $this->User_->getUserDataForAttendanceReport($from, $to);
 
-        $content .= '
-                    </tbody>
-                </table>
-            </pre>';
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('user/pdf_report_attendance', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
 
-        $dompdf->loadHtml($content);
-        $dompdf->setPaper('Letter');
+    public function timeIn()
+    {
+        $this->load->library('session');
 
-        // Render the HTML as PDF
-        $dompdf->render();
+        echo $this->User_->recordTimeIn();
 
-        $dompdf->stream("Attendance.pdf", array("Attachment" => false));
+        // redirect(base_url('index.php/Page/user'));
+    }
 
-        exit(0);
+    public function timeOut()
+    {
+        $this->load->library('session');
+
+        echo $this->User_->recordTimeOut();
+
+        // redirect(base_url('index.php/Page/user'));
+    }
+
+    public function checkUser()
+    {
+        $this->load->library('session');
+
+        $this->User_->checkUserStatus();
+    }
+
+    public function getLastImage()
+    {
+        return $this->User_->getLastImage();
+    }
+
+    public function storeImage()
+    {
+        $file_tmp = $_FILES['webcam']['tmp_name'];
+        $file_name = time() . '.jpg';
+        $file_destination = getcwd() . DIRECTORY_SEPARATOR . 'assets/images/' . $file_name;
+        move_uploaded_file($file_tmp, $file_destination);
+
+        echo $file_name;
     }
 }

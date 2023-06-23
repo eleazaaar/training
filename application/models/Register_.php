@@ -23,7 +23,7 @@ class Register_ extends CI_Model
                     "password" => password_hash($_POST['password'], PASSWORD_BCRYPT)
                 );
 
-                $result = $this->db->insert('users', $data);
+                $result = $this->db->insert('user', $data);
 
                 if ($result) {
                     echo "Success";
@@ -41,7 +41,7 @@ class Register_ extends CI_Model
     public function checkUser()
     {
         $this->db->select('id');
-        $this->db->from('users');
+        $this->db->from('user');
         $this->db->where('email', $_POST['email']);
         $query = $this->db->get();
 

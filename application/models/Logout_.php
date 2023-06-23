@@ -7,31 +7,20 @@ class Logout_ extends CI_Model
     {
         parent::__construct();
         $this->load->database();
+        $this->load->library('session');
     }
 
-    public function recordTimeOut()
+    public function index()
     {
-        $user = array("email" => $_SESSION['email']);
+        // $this->Logout_->recordTimeOut();
 
-        $query = $this->db->get_where('users', $user);
+        if (isset($_SESSION['training_system'])) {
 
-        if ($result = $query->row()) {
-            // echo "User found";
-            // print_r($result);
+            $data = array("training_system", "user_id", "email", "name");
 
-            $id = $result->id;
-
-            // Current time
-            $this->load->helper('date');
-            $format = "%Y-%m-%d %H:%i:%s";
-            $date = (string) mdate($format);
-
-            $data = array(
-                "time_out" => $date
-            );
-
-            $this->db->order_by('id', 'DESC');
-            $this->db->update('user_data', $data, "users_id = $id", 1);
+            $this->session->unset_userdata($data);
         }
+
+        redirect(base_url('index.php/Page/index'));
     }
 }

@@ -7,34 +7,26 @@ class Page extends CI_Controller
     {
         $this->load->library('session');
 
-        $data = ["title" => " | Login"];
+        $data = ["title" => ""];
 
         if (!isset($_SESSION['training_system'])) {
             $this->load->view('template/header', $data);
             $this->load->view('template/nav_bar');
-            $this->load->view('login');
+            $this->load->view('index');
             $this->load->view('template/required_script');
             $this->load->view('jquery/jquery');
             $this->load->view('template/footer');
         } else {
-            $this->admin();
+            $this->user();
         }
     }
 
-    public function admin()
+    public function user()
     {
         $this->load->library('session');
 
-        $data = ["title" => ""];
-
         if (isset($_SESSION['training_system'])) {
-            $this->load->view('template/header', $data);
-            $this->load->view('template/nav_bar');
-            $this->load->view('admin/index');
-            $this->load->view('template/required_script');
-            $this->load->view('admin/ajax');
-            $this->load->view('jquery/jquery');
-            $this->load->view('template/footer');
+            redirect(base_url('index.php/User/index'));
         } else {
             $this->login();
         }
@@ -54,7 +46,7 @@ class Page extends CI_Controller
             $this->load->view('jquery/jquery');
             $this->load->view('template/footer');
         } else {
-            $this->admin();
+            $this->user();
         }
     }
 
@@ -64,11 +56,20 @@ class Page extends CI_Controller
 
         $data = ["title" => " | Register"];
 
-        $this->load->view('template/header', $data);
-        $this->load->view('template/nav_bar');
-        $this->load->view('register');
-        $this->load->view('template/required_script');
-        $this->load->view('jquery/jquery');
-        $this->load->view('template/footer');
+        if (!isset($_SESSION['training_system'])) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/nav_bar');
+            $this->load->view('register');
+            $this->load->view('template/required_script');
+            $this->load->view('jquery/jquery');
+            $this->load->view('template/footer');
+        } else {
+            redirect(base_url('index.php/User/index'));
+        }
+    }
+
+    public function time()
+    {
+        echo date("l" . "\n" . "F d, Y" . "\n" . "h:i:s A");
     }
 }

@@ -14,7 +14,7 @@ class Login_ extends CI_Model
         $user = array("email" => $_POST['email']);
         $password = $_POST['password'];
 
-        $query = $this->db->get_where('users', $user);
+        $query = $this->db->get_where('user', $user);
 
         if ($result = $query->row()) {
             // echo "User found";
@@ -32,7 +32,7 @@ class Login_ extends CI_Model
 
                 $this->session->set_userdata($data);
 
-                $this->recordTimeIn();
+                // $this->recordTimeIn();
 
                 echo "Success";
             } else {
@@ -40,24 +40,6 @@ class Login_ extends CI_Model
             }
         } else {
             echo "No user found";
-        }
-    }
-
-    public function recordTimeIn()
-    {
-        $user = array("email" => $_SESSION['email']);
-
-        $query = $this->db->get_where('users', $user);
-
-        if ($result = $query->row()) {
-            // echo "User found";
-            // print_r($result);
-
-            $data = array(
-                "users_id" => $result->id
-            );
-
-            $this->db->insert('user_data', $data);
         }
     }
 }
