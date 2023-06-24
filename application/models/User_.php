@@ -262,13 +262,10 @@ class User_ extends CI_Model
 
     public function setSchedule()
     {
-        // $user = array("id" => $_SESSION['user_id'], "day" => );
+        print_r($_POST);
 
-        // $query = $this->db->get_where('user', $user);
-
-        // print_r($_POST);
-        foreach ($_POST as $value) {
-            print_r($value);
-        }
+        // foreach ($_POST as $value) {
+        //     print_r($value);
+        // }
     }
 }

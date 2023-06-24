@@ -4,5 +4,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 <script src="<?php echo base_url('assets/js/dropdown.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/webcamjs/webcam.js') ?>"></script>

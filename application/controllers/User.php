@@ -165,6 +165,5 @@ class User extends CI_Controller
     public function setSchedule()
     {
         $this->User_->setSchedule();
-        // print_r($_POST);
     }
 }
