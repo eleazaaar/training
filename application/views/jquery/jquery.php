@@ -188,7 +188,7 @@
             '<td style="text-align: center;"><input type="time" name="' + day + '-tardy-' + counter + '" id="' + day + '-tardy-' + counter + '" readonly></td>' +
             '<td style="text-align: center;"><input type="time" name="' + day + '-absent-' + counter + '" id="' + day + '-absent-' + counter + '" readonly></td>' +
             '<td style="text-align: center;"><input type="time" name="' + day + '-under-time-' + counter + '" id="' + day + '-under-time-' + counter + '" readonly></td>' +
-            '<td style="text-align: center;"><button type="button" class="btn btn-danger" id="remove" onclick="remove()"><i class="fa fa-minus" aria-hidden="true"></i></td>' +
+            '<td style="text-align: center;"><button type="button" class="btn btn-danger" id="remove' + counter + '" onclick="remove(' + counter + ')"><i class="fa fa-minus" aria-hidden="true"></i></td>' +
             '</tr>';
 
         tableBody = $("#" + day);
@@ -198,8 +198,8 @@
         counter++;
     }
 
-    function remove() {
-        $('#remove').parent().parent().remove();
+    function remove(counter) {
+        $('#remove' + counter).parent().parent().remove();
     }
 
     function setTardy(day) {
