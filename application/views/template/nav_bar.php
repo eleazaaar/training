@@ -21,11 +21,11 @@
                 <div class="dropdown">
                     <button onclick="myProfile()" class="dropbtn btn btn-dark"><i class="fa fa-user"></i> Profile <i class="fa fa-caret-down" aria-hidden="true"></i></button>
                     <div id="my-dropdown" class="dropdown-content">
-                        <a href="<?php echo site_url('User/attendance') ?>">
-                            <i class="fa fa-user"></i> Attendance
-                        </a>
                         <a href="<?php echo site_url('User/schedule') ?>">
                             <i class="fa fa-calendar"></i> Schedule
+                        </a>
+                        <a href="<?php echo site_url('User/attendance') ?>">
+                            <i class="fa fa-user"></i> Attendance
                         </a>
                         <a href="<?php echo site_url('User/logged_session') ?>">
                             <i class="fa fa-history"></i> Logged Session

@@ -135,15 +135,15 @@ class User extends CI_Controller
         return $this->User_->getLastImage();
     }
 
-    public function storeImage()
-    {
-        $file_tmp = $_FILES['webcam']['tmp_name'];
-        $file_name = time() . '.jpg';
-        $file_destination = getcwd() . DIRECTORY_SEPARATOR . 'assets/images/' . $file_name;
-        move_uploaded_file($file_tmp, $file_destination);
+    // public function storeImage()
+    // {
+    //     $file_tmp = $_FILES['webcam']['tmp_name'];
+    //     $file_name = time() . '.jpg';
+    //     $file_destination = getcwd() . DIRECTORY_SEPARATOR . 'assets/images/' . $file_name;
+    //     move_uploaded_file($file_tmp, $file_destination);
 
-        echo $file_name;
-    }
+    //     echo $file_name;
+    // }
 
     public function schedule()
     {

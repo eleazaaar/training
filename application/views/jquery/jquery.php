@@ -172,11 +172,8 @@
         Webcam.snap(function(data_uri) {
             // display results in page
 
-            Webcam.upload(data_uri, '<?php echo site_url('User/storeImage') ?>', function(code, text) {
-                // console.log(text);
-                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
-                $('#image-name').val(text);
-            });
+            document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+            $('#image-name').val(data_uri);
         });
     }
 

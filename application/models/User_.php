@@ -30,7 +30,7 @@ class User_ extends CI_Model
             $name = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             $timeIn = date_format(date_create($value->time_in), "l F d, Y - h:i A");
             $timeOut = $value->time_out != "0000-00-00 00:00:00" ? date_format(date_create($value->time_out), "l F d, Y - h:i A") : "";
-            $country = $value->country == 'PH' ? 'Phillipines' : '';
+            $country = $value->country;
             $location = $country . ', ' . $value->city;
             $values = array("time_in" => $timeIn, "time_out" => $timeOut, "location" => $location, "ip_address" => $value->ip_address, "browser" => $value->browser);
             array_push($result, $values);
@@ -78,7 +78,7 @@ class User_ extends CI_Model
             $name = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             $timeIn = date_format(date_create($value->time_in), "F d, Y - h:i A");
             $timeOut = $value->time_out != "0000-00-00 00:00:00" ? date_format(date_create($value->time_out), "F d, Y - h:i A") : "";
-            $country = $value->country == 'PH' ? 'Phillipines' : '';
+            $country = $value->country;
             $location = $country . ', ' . $value->city;
             $values = array("title" => "Logged Session Report", "name" => $name, "time_in" => $timeIn, "time_out" => $timeOut, "location" => $location, "ip_address" => $value->ip_address, "browser" => $value->browser);
             array_push($result, $values);
@@ -134,8 +134,9 @@ class User_ extends CI_Model
         $id = array('user_id' => $_SESSION['user_id']);
         $this->db->order_by('time_in', 'desc');
         $query = $this->db->get_where('user_data', $id, 1);
-        $result = $query->row();
-        return $result->time_out;
+        if ($result = $query->row()) {
+            return $result->time_in;
+        }
     }
 
     public function recordTimeIn()
@@ -144,7 +145,8 @@ class User_ extends CI_Model
         $now = strtotime($this->getDateToday());
         $interval = 60;
 
-        $location = json_decode(file_get_contents("http://ipinfo.io/"));
+        // $location = json_decode(file_get_contents("http://ipinfo.io/"));
+        $location = json_decode(file_get_contents("http://ip-api.com/json/"));
 
         if ($now - $timeOut > $interval) {
             try {
@@ -166,12 +168,10 @@ class User_ extends CI_Model
                         $agent = 'Unidentified User Agent';
                     }
 
-                    $ip_address = $this->input->ip_address();
-
                     $data = array(
                         "user_id" => $result->id,
                         "time_in_image" => $_POST['image'],
-                        "ip_address" => $ip_address,
+                        "ip_address" => $location->query,
                         "browser" => $agent,
                         "country" => $location->country,
                         "city" => $location->city

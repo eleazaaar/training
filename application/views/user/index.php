@@ -16,7 +16,7 @@
                     <th>
                         <div class="container">
                             <div style="height: 300px; width: 300px; text-align: center">
-                                <img src="<?php echo base_url('assets/images/') . $image; ?>" alt="Me.jpg" style="width: 300px;">
+                                <img src="<?php echo $image; ?>" alt="Me.jpg" style="width: 300px;">
                                 <h3 class="mt-4" id="timeData" hidden></h3>
                             </div>
                         </div>
