@@ -135,16 +135,6 @@ class User extends CI_Controller
         return $this->User_->getLastImage();
     }
 
-    // public function storeImage()
-    // {
-    //     $file_tmp = $_FILES['webcam']['tmp_name'];
-    //     $file_name = time() . '.jpg';
-    //     $file_destination = getcwd() . DIRECTORY_SEPARATOR . 'assets/images/' . $file_name;
-    //     move_uploaded_file($file_tmp, $file_destination);
-
-    //     echo $file_name;
-    // }
-
     public function schedule()
     {
         $this->load->library('session');
@@ -167,10 +157,5 @@ class User extends CI_Controller
     public function setSchedule()
     {
         $this->User_->setSchedule();
-    }
-
-    public function setSchedules()
-    {
-        print_r($_POST);
     }
 }

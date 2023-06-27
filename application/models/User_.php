@@ -1,7 +1,4 @@
 <?php
-
-use Mpdf\Tag\Tr;
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_ extends CI_Model
@@ -99,7 +96,6 @@ class User_ extends CI_Model
         $query = $this->db->get();
 
         $result = [];
-
 
         foreach ($query->result() as $value) {
             $name = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
@@ -242,9 +238,6 @@ class User_ extends CI_Model
         $query = $this->db->get_where('user', $user);
 
         if ($result = $query->row()) {
-            // echo "User found";
-            // print_r($result);
-
             echo $result->status;
         }
     }
@@ -256,9 +249,6 @@ class User_ extends CI_Model
         $query = $this->db->get_where('user_data', $user);
 
         if ($result = $query->row()) {
-            // echo "User found";
-            // print_r($result);
-
             return $result->time_out_image == "" ? $result->time_in_image : $result->time_out_image;
         }
     }
