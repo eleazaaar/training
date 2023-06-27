@@ -31,6 +31,27 @@ class User extends CI_Controller
         }
     }
 
+    public function profile()
+    {
+        if (isset($_SESSION['training_system'])) {
+            $image = $this->getLastImage();
+
+            $data = array(
+                "title" => " | My Profile",
+                "image" => $image
+            );
+
+            $this->load->view('template/header', $data);
+            $this->load->view('template/nav_bar');
+            $this->load->view('user/profile', $data);
+            $this->load->view('template/required_script');
+            $this->load->view('jquery/jquery');
+            $this->load->view('template/footer');
+        } else {
+            redirect(base_url('index.php/Page/index'));
+        }
+    }
+
     public function logged_session()
     {
         $this->load->library('session');

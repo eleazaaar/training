@@ -34,6 +34,9 @@
                 <div class="dropdown">
                     <button onclick="myProfile()" class="dropbtn btn btn-dark"><i class="fa fa-user"></i> Profile <i class="fa fa-caret-down" aria-hidden="true"></i></button>
                     <div id="my-dropdown" class="dropdown-content">
+                        <a href="<?php echo site_url('User/profile') ?>">
+                            <i class="fa fa-user-circle-o"></i> My Profile
+                        </a>
                         <a href="<?php echo site_url('Logout/index') ?>">
                             <i class="fa fa-sign-out"></i> Log Out
                         </a>

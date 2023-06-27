@@ -11,7 +11,6 @@
     </div>
     <div class="container bg-light p-3">
         <form action="<?php echo site_url(); ?>/User/generatePDFAttendance" method="post" target="_blank">
-
             <label for="attendance-date">Date</label>
             <input type="date" name="attendance-date" id="attendance-date" required>
 

@@ -48,7 +48,6 @@ class User_ extends CI_Model
         $result = [];
 
         foreach ($query->result() as $value) {
-            $name = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             $timeIn = date_format(date_create($value->time_in), "l F d, Y - h:i A");
             $timeOut = $value->time_out != "0000-00-00 00:00:00" ? date_format(date_create($value->time_out), "l F d, Y - h:i A") : "";
             $values = array("time_in" => $timeIn, "time_out" => $timeOut);
@@ -92,7 +91,7 @@ class User_ extends CI_Model
         $this->db->where('user_data.user_id', $_SESSION['user_id']);
         $this->db->where('time_in >=', $from);
         $this->db->where('time_in <=', $to);
-        $this->db->order_by('time_in', 'desc');
+        $this->db->order_by('time_in', 'asc');
         $query = $this->db->get();
 
         $result = [];
@@ -101,9 +100,7 @@ class User_ extends CI_Model
             $name = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             $timeIn = date_format(date_create($value->time_in), "h:i A");
             $timeOut = $value->time_out != "0000-00-00 00:00:00" ? date_format(date_create($value->time_out), "h:i A") : "";
-            $country = $value->country == 'PH' ? 'Phillipines' : '';
-            $location = $country . ', ' . $value->city;
-            $values = array("title" => "Attendance Report", "date" => $from, "name" => $name, "time_in" => $timeIn, "time_out" => $timeOut, "location" => $location, "ip_address" => $value->ip_address, "browser" => $value->browser);
+            $values = array("title" => "Attendance Report", "date" => $from, "name" => $name, "time_in" => $timeIn, "time_out" => $timeOut);
             array_push($result, $values);
         }
 
