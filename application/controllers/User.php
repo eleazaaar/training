@@ -15,12 +15,14 @@ class User extends CI_Controller
         if (isset($_SESSION['training_system'])) {
             $image = $this->getLastImage();
 
-            $data = ["title" => " | Home"];
-            $image = ["image" => $image];
+            $data = array(
+                "title" => " | Home",
+                "image" => $image
+            );
 
             $this->load->view('template/header', $data);
             $this->load->view('template/nav_bar');
-            $this->load->view('user/index', $image);
+            $this->load->view('user/index', $data);
             $this->load->view('template/required_script');
             $this->load->view('jquery/jquery');
             $this->load->view('template/footer');
@@ -165,5 +167,10 @@ class User extends CI_Controller
     public function setSchedule()
     {
         $this->User_->setSchedule();
+    }
+
+    public function setSchedules()
+    {
+        print_r($_POST);
     }
 }

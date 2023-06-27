@@ -1,4 +1,7 @@
 <?php
+
+use Mpdf\Tag\Tr;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_ extends CI_Model
@@ -262,10 +265,24 @@ class User_ extends CI_Model
 
     public function setSchedule()
     {
-        print_r($_POST);
+        try {
+            $this->db->delete('user_schedule', ['user_id' => $_SESSION['user_id']]);
 
-        // foreach ($_POST as $value) {
-        //     print_r($value);
-        // }
+            foreach ($_POST as $value) {
+                $data = array(
+                    "user_id" => $_SESSION['user_id'],
+                    "day" => $value[0],
+                    "duty_from" => $value[1],
+                    "duty_to" => $value[2],
+                    "tardy" => $value[3],
+                    "absent" => $value[4],
+                    "under_time" => $value[5]
+                );
+                $this->db->insert('user_schedule', $data);
+            }
+            echo "Success";
+        } catch (\Throwable $th) {
+            echo $th;
+        }
     }
 }

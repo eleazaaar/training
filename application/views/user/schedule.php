@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="container bg-light p-3">
-        <form action="<?= site_url('User/setSchedule') ?>" method="POST">
+        <form method="POST" id="form-schedule">
             <table class="table table-bordered table-striped dtr-inline p-3" id="table-schedule">
                 <thead>
                     <tr>
@@ -25,24 +25,48 @@
                 <tbody>
                     <?php
                     $days = array("mon" => "Monday", "tue" => "Tuesday", "wed" => "Wednesday", "thu" => "Thursday", "fri" => "Friday", "sat" => "Saturday", "sun" => "Sunday");
-                    $row = 0;
-                    foreach ($days as $key => $value) {
+
+                    $this->load->database();
+                    $user = array("user_id" => $_SESSION['user_id']);
+                    $query = $this->db->get_where('user_schedule', $user);
+                    $result = $query->result();
+
+                    $oldKey = "";
+                    $counter = 1;
+
+                    foreach ($result as $value) {
+                        $oldKey = $key ?? "";
+                        $key = $value->day;
+                        $day = $days[$key];
+                        $from = $value->duty_from != '00:00:00' ? $value->duty_from : '';
+                        $to = $value->duty_to != '00:00:00' ? $value->duty_to : '';
+                        $tardy = $value->tardy != '00:00:00' ? $value->tardy : '';
+                        $absent = $value->absent != '00:00:00' ? $value->absent : '';
+                        $under_time = $value->under_time != '00:00:00' ? $value->under_time : '';
                     ?>
                         <tr id="<?= $key ?>">
-                            <td style="text-align: center;"><input type="hidden" id="<?= $key ?>-day" name="<?= $key ?>-day" value="<?= $key ?>"><?= $value ?></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-from" name="<?= $key ?>-from" onchange="setTardy('<?= $key ?>')"></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-to" name="<?= $key ?>-to" onchange="setAbsentUnderTime('<?= $key ?>')"></td>
-                            <td style=" text-align: center;"><input type="time" id="<?= $key ?>-tardy" name="<?= $key ?>-tardy" readonly></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-absent" name="<?= $key ?>-absent" readonly></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-under-time" name="<?= $key ?>-under-time" readonly></td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-success" id="add" onclick="addDay('<?= $key ?>')"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
+                            <td style="text-align: center;"><input type="hidden" id="<?= $key ?>-day" name="<?= $key . $counter ?>[]" value="<?= $key ?>"><?= $key != $oldKey ? $day : ""; ?></td>
+                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-from" name="<?= $key . $counter ?>[]" onchange="setTardy('<?= $key ?>')" value="<?= $from ?>"></td>
+                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-to" name="<?= $key . $counter ?>[]" onchange="setAbsentUnderTime('<?= $key ?>')" value="<?= $to ?>"></td>
+                            <td style=" text-align: center;"><input type="time" id="<?= $key ?>-tardy" name="<?= $key . $counter ?>[]" value="<?= $tardy ?>" readonly></td>
+                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-absent" name="<?= $key . $counter ?>[]" value="<?= $absent ?>" readonly></td>
+                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-under-time" name="<?= $key . $counter ?>[]" value="<?= $under_time ?>" readonly></td>
+                            <td style="text-align: center;">
+                                <?php
+                                if ($key != $oldKey) {
+                                ?>
+                                    <button type="button" class="btn btn-success" id="add" onclick="addDay('<?= $key ?>')"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                <?php } else { ?>
+                                    <button type="button" class="btn btn-danger" id="remove<?= $counter ?>" onclick="remove('<?= $counter ?>')"><i class="fa fa-minus" aria-hidden="true"></i>
+                                    <?php } ?>
+                            </td>
                         </tr>
-                    <?php $row++;
+                    <?php $counter++;
                     } ?>
                 </tbody>
             </table>
             <div class="text-right p-1">
-                <input type="submit" class="btn btn-success" value="Save Schedule">
+                <button type="button" class="btn btn-success" onclick="saveSchedule()">Save Schedue</button>
             </div>
         </form>
     </div>

@@ -137,11 +137,13 @@
                     $('#time-out').show();
                     $('#time-in-modal').hide();
                     $('#time-out-modal').show();
+                    $('#timeData').html("Time In");
                 } else {
                     $('#time-in').show();
                     $('#time-out').hide();
                     $('#time-in-modal').show();
                     $('#time-out-modal').hide();
+                    $('#timeData').html("Time Out");
                 }
             })
             .fail(function(errorThrown) {
@@ -178,16 +180,16 @@
         });
     }
 
-    counter = 1;
+    counter = 7;
 
     function addDay(day) {
         markup = '<tr>' +
-            '<td style="text-align: center;"><input type="hidden" name="' + day + '-day" id="' + day + '-day-' + counter + '" value="' + day + '"></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + '-from-' + counter + '" id="' + day + '-from-' + counter + '" onchange="setTardys(\'' + day + '\',\'' + counter + '\')"></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + '-to-' + counter + '" id="' + day + '-to-' + counter + '" onchange="setAbsentUnderTimes(\'' + day + '\',\'' + counter + '\')"></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + '-tardy-' + counter + '" id="' + day + '-tardy-' + counter + '" readonly></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + '-absent-' + counter + '" id="' + day + '-absent-' + counter + '" readonly></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + '-under-time-' + counter + '" id="' + day + '-under-time-' + counter + '" readonly></td>' +
+            '<td style="text-align: center;"><input type="hidden" name="' + day + counter + '[]" id="' + day + '-day-' + counter + '" value="' + day + '"></td>' +
+            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-from-' + counter + '" onchange="setTardys(\'' + day + '\',\'' + counter + '\')"></td>' +
+            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-to-' + counter + '" onchange="setAbsentUnderTimes(\'' + day + '\',\'' + counter + '\')"></td>' +
+            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-tardy-' + counter + '" readonly></td>' +
+            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-absent-' + counter + '" readonly></td>' +
+            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-under-time-' + counter + '" readonly></td>' +
             '<td style="text-align: center;"><button type="button" class="btn btn-danger" id="remove' + counter + '" onclick="remove(' + counter + ')"><i class="fa fa-minus" aria-hidden="true"></i></td>' +
             '</tr>';
 
@@ -236,91 +238,23 @@
         $('#' + day + '-under-time-' + row).val(under_time);
     }
 
-    // function add(day, n) {
-    //     markup = '<tr>' +
-    //         '<td style="text-align: center;"></td>' +
-    //         '<td style="text-align: center;"><input type="time" id="m-from" onchange="setSchedule()"></td>' +
-    //         '<td style="text-align: center;"><input type="time" id="m-to" onchange="setSchedule()"></td>' +
-    //         '<td style="text-align: center;"><input type="time" id="m-tardy" onchange="setSchedule()"></td>' +
-    //         '<td style="text-align: center;"><input type="time" id="m-absent" onchange="setSchedule()"></td>' +
-    //         '<td style="text-align: center;"><input type="time" id="m-under-time" onchange="setSchedule()"></td>' +
-    //         '<td style="text-align: center;"></td>' +
-    //         '</tr>';
-
-    //     tableBody = $("#table-schedule tbody");
-    //     $(markup).insertAfter(tableBody);
-    // }
-
-    // function setSchedule() {
-    //     data = {
-    //         monday: {
-    //             m_from: $('#m-from').val(),
-    //             m_to: $('#m-to').val(),
-    //             m_tardy: $('#m-tardy').val(),
-    //             m_absent: $('#m-absent').val(),
-    //             m_under_time: $('#m-under-time').val()
-    //         },
-
-    //         tuesday: {
-    //             t_from: $('#t-from').val(),
-    //             t_to: $('#t-to').val(),
-    //             t_tardy: $('#t-tardy').val(),
-    //             t_absent: $('#t-absent').val(),
-    //             t_under_time: $('#t-under-time').val(),
-    //         },
-
-    //         wednesday: {
-    //             w_from: $('#w-from').val(),
-    //             w_to: $('#w-to').val(),
-    //             w_tardy: $('#w-tardy').val(),
-    //             w_absent: $('#w-absent').val(),
-    //             w_under_time: $('#w-under-time').val(),
-    //         },
-
-    //         thursday: {
-    //             th_from: $('#th-from').val(),
-    //             th_to: $('#th-to').val(),
-    //             th_tardy: $('#th-tardy').val(),
-    //             th_absent: $('#th-absent').val(),
-    //             th_under_time: $('#th-under-time').val(),
-    //         },
-
-    //         friday: {
-    //             f_from: $('#f-from').val(),
-    //             f_to: $('#f-to').val(),
-    //             f_tardy: $('#f-tardy').val(),
-    //             f_absent: $('#f-absent').val(),
-    //             f_under_time: $('#f-under-time').val(),
-    //         },
-
-    //         saturday: {
-    //             sat_from: $('#sat-from').val(),
-    //             sat_to: $('#sat-to').val(),
-    //             sat_tardy: $('#sat-tardy').val(),
-    //             sat_absent: $('#sat-absent').val(),
-    //             sat_under_time: $('#sat-under-time').val(),
-    //         },
-
-    //         sunday: {
-    //             sun_from: $('#sun-from').val(),
-    //             sun_to: $('#sun-to').val(),
-    //             sun_tardy: $('#sun-tardy').val(),
-    //             sun_absent: $('#sun-absent').val(),
-    //             sun_under_time: $('#sun-under-time').val()
-    //         }
-    //     };
-
-    //     $.ajax({
-    //             method: 'POST',
-    //             url: '<?php // echo site_url(); 
-                            ?>/User/setSchedule',
-    //             data: data
-    //         })
-    //         .done(function(response) {
-    //             console.log(response)
-    //         })
-    //         .fail(function(errorThrown) {
-    //             console.log(errorThrown);
-    //         });
-    // }
+    function saveSchedule() {
+        data = $('#form-schedule').serialize();
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo site_url(); ?>/User/setSchedule',
+                data: data
+            })
+            .done(function(response) {
+                // console.log(response)
+                if (response === "Success") {
+                    Swal.fire("Schedule Save Success", "", "success");
+                } else {
+                    Swal.fire(response, "", "warning")
+                }
+            })
+            .fail(function(errorThrown) {
+                console.log(errorThrown);
+            });
+    }
 </script>
