@@ -118,7 +118,8 @@ class User extends CI_Controller
         $from = $this->input->post('attendance-date');
         $to = date("Y-m-d", strtotime('+1 day', strtotime($from)));
 
-        $data['data'] = $this->User_->getUserDataForAttendanceReport($from, $to);
+        $data['data']['attendance'] = $this->User_->getUserDataForAttendanceReport($from, $to);
+        $data['data']['remarks'] = $this->User_->getAttendanceRemarks($from, $to);
 
         $mpdf = new \Mpdf\Mpdf();
         $html = $this->load->view('user/pdf_report_attendance', $data, true);

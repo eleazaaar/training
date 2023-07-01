@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <head>
     <meta charset="utf-8">
-    <title><?php echo $data[0]['title']; ?></title>
+    <title><?php echo $data[0]['title'] ?? ""; ?></title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/report.css') ?>">
 </head>
 
@@ -16,8 +16,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0"><b><?php echo $data[0]['title']; ?></b></h1>
-                    <h2><?php echo $data[0]['name']; ?></h2>
+                    <h1 class="m-0"><b><?php echo $data[0]['title'] ?? ""; ?></b></h1>
+                    <h2><?php echo $data[0]['name'] ?? ""; ?></h2>
                 </div>
             </div>
         </div>

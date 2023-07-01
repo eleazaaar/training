@@ -14,12 +14,17 @@ class User_ extends CI_Model
 
     public function getUserDataForLoggedSession()
     {
-        $this->db->select('*');
-        $this->db->from('user_data');
-        $this->db->join('user', 'user.id = user_data.user_id');
-        $this->db->where('user_data.user_id', $_SESSION['user_id']);
-        $this->db->order_by('time_in', 'desc');
-        $query = $this->db->get();
+        // $this->db->select('*');
+        // $this->db->from('user_data');
+        // $this->db->join('user', 'user.id = user_data.user_id');
+        // $this->db->where('user_data.user_id', $_SESSION['user_id']);
+        // $this->db->order_by('time_in', 'desc');
+        // $query = $this->db->get();
+
+        $query = $this->db->query("SELECT * FROM user_data
+        INNER JOIN user ON user.id = user_data.user_id
+        WHERE user_data.user_id = " . $_SESSION['user_id'] .
+            " ORDER BY time_in DESC");
 
         $result = [];
 
@@ -38,12 +43,16 @@ class User_ extends CI_Model
 
     public function getUserDataForAttendance()
     {
-        $this->db->select('*');
-        $this->db->from('user_data');
-        $this->db->join('user', 'user.id = user_data.user_id');
-        $this->db->where('user_data.user_id', $_SESSION['user_id']);
-        $this->db->order_by('time_in', 'desc');
-        $query = $this->db->get();
+        // $this->db->select('*');
+        // $this->db->from('user_data');
+        // $this->db->join('user', 'user.id = user_data.user_id');
+        // $this->db->where('user_data.user_id', $_SESSION['user_id']);
+        // $this->db->order_by('time_in', 'desc');
+        // $query = $this->db->get();
+
+        $query = $this->db->query("SELECT * FROM user_data 
+        INNER JOIN user ON user.id = user_data.user_id 
+        WHERE user_data.user_id = '" . $_SESSION['user_id'] . "'");
 
         $result = [];
 
@@ -59,14 +68,24 @@ class User_ extends CI_Model
 
     public function getUserDataForLoggedSessionReport($from, $to)
     {
-        $this->db->select('*');
-        $this->db->from('user_data');
-        $this->db->join('user', 'user.id = user_data.user_id');
-        $this->db->where('user_data.user_id', $_SESSION['user_id']);
-        $from != "" ? $this->db->where('time_in >=', $from) : "";
-        $to != "" ? $this->db->where('time_in <=', $to) : "";
-        $this->db->order_by('time_in', 'desc');
-        $query = $this->db->get();
+        // $this->db->select('*');
+        // $this->db->from('user_data');
+        // $this->db->join('user', 'user.id = user_data.user_id');
+        // $this->db->where('user_data.user_id', $_SESSION['user_id']);
+        // $from != "" ? $this->db->where('time_in >=', $from) : "";
+        // $to != "" ? $this->db->where('time_in <=', $to) : "";
+        // $this->db->order_by('time_in', 'desc');
+        // $query = $this->db->get();
+
+        $where_clause = "";
+
+        $from != "" ? $where_clause .= "AND time_in >= '" . $from . " 00:00:00' " : "";
+        $to != "" ? $where_clause .= "AND time_in <= '" . $to . " 00:00:00' " : "";
+
+        $query = $this->db->query("SELECT * FROM user_data
+            INNER JOIN user ON user.id = user_data.user_id
+            WHERE 1 " . $where_clause .
+            "ORDER BY time_in DESC");
 
         $result = [];
 
@@ -105,6 +124,26 @@ class User_ extends CI_Model
         }
 
         return $result;
+    }
+
+    public function getAttendanceRemarks($from, $to)
+    {
+        $day = strtolower(date_format(date_create($from), "D"));
+
+        $attendance = $this->getUserDataForAttendanceReport($from, $to);
+
+        $this->db->select('*');
+        $this->db->from('user_schedule');
+        $this->db->join('user', 'user.id = user_schedule.user_id');
+        $this->db->where('user_schedule.user_id', $_SESSION['user_id']);
+        $this->db->where('day', $day);
+        $scheduleQuery = $this->db->get();
+
+        $result = $scheduleQuery->result_array();
+        $output = $attendance;
+
+        // return $result;
+        return "hihi";
     }
 
     public function getDateToday()
