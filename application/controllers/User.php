@@ -34,10 +34,6 @@ class User extends CI_Controller
     public function profile()
     {
         if (isset($_SESSION['training_system'])) {
-            $image = $this->getLastImage();
-
-            // $data['information'] = $this->User_->getUserInformation();
-
             $data = array(
                 "title" => " | My Profile",
                 "information" => $this->User_->getUserInformation()
