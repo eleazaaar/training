@@ -2,12 +2,40 @@
 <script>
     setInterval(function() {
         $.ajax({
-                url: '<?php echo site_url(); ?>/Page/time'
-            })
-            .done(function(response) {
+            url: '<?php echo site_url('Page/time'); ?>',
+            success: function(response) {
                 $('#date').val(response);
-            });
+            }
+        })
     }, 1000);
+
+    function updateUserInformation() {
+        $.ajax({
+            url: '<?= site_url('User/updateUserInformation') ?>',
+            method: 'POST',
+            data: $('#form-information').serialize(),
+            success: function(response) {
+                // console.log(response);
+                if (response === "Success") {
+                    Swal.fire(response, "", "success")
+                        .then(() => {
+                            location.replace("<?php echo site_url('User/profile'); ?>");
+                        });
+                } else {
+                    Swal.fire(response, "", "warning")
+                }
+            },
+            fail: function(error) {
+                console.log(error);
+            }
+        })
+    }
+
+    $("#email, #password").on("keypress", function(event) {
+        if (event.which == 13) {
+            login();
+        }
+    });
 
     function login() {
         $.ajax({
@@ -181,12 +209,12 @@
 
     function addDay(day) {
         markup = '<tr>' +
-            '<td style="text-align: center;"><input type="hidden" name="' + day + counter + '[]" id="' + day + '-day-' + counter + '" value="' + day + '"></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-from-' + counter + '" onchange="setTardys(\'' + day + '\',\'' + counter + '\')"></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-to-' + counter + '" onchange="setAbsentUnderTimes(\'' + day + '\',\'' + counter + '\')"></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-tardy-' + counter + '" readonly></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-absent-' + counter + '" readonly></td>' +
-            '<td style="text-align: center;"><input type="time" name="' + day + counter + '[]" id="' + day + '-under-time-' + counter + '" readonly></td>' +
+            '<td style="text-align: center;"><input class="form-control" type="hidden" name="' + day + counter + '[]" id="' + day + '-day-' + counter + '" value="' + day + '"></td>' +
+            '<td style="text-align: center;"><input class="form-control" type="time" name="' + day + counter + '[]" id="' + day + '-from-' + counter + '" onchange="setTardys(\'' + day + '\',\'' + counter + '\')"></td>' +
+            '<td style="text-align: center;"><input class="form-control" type="time" name="' + day + counter + '[]" id="' + day + '-to-' + counter + '" onchange="setAbsentUnderTimes(\'' + day + '\',\'' + counter + '\')"></td>' +
+            '<td style="text-align: center;"><input class="form-control" type="time" name="' + day + counter + '[]" id="' + day + '-tardy-' + counter + '" readonly></td>' +
+            '<td style="text-align: center;"><input class="form-control" type="time" name="' + day + counter + '[]" id="' + day + '-absent-' + counter + '" readonly></td>' +
+            '<td style="text-align: center;"><input class="form-control" type="time" name="' + day + counter + '[]" id="' + day + '-under-time-' + counter + '" readonly></td>' +
             '<td style="text-align: center;"><button type="button" class="btn btn-danger" id="remove' + counter + '" onclick="remove(' + counter + ')"><i class="fa fa-minus" aria-hidden="true"></i></td>' +
             '</tr>';
 

@@ -11,8 +11,8 @@
     </div>
     <div class="container bg-light p-3">
         <form method="POST" id="form-schedule">
-            <table class="table table-bordered table-striped dtr-inline p-3" id="table-schedule">
-                <thead>
+            <table class="table table-bordered" id="table-schedule">
+                <thead style="text-align: center;">
                     <tr>
                         <th>Day of Week</th>
                         <th>From</th>
@@ -45,12 +45,12 @@
                         $under_time = $value->under_time != '00:00:00' ? $value->under_time : '';
                     ?>
                         <tr id="<?= $key ?>">
-                            <td style="text-align: center;"><input type="hidden" id="<?= $key ?>-day" name="<?= $key . $counter ?>[]" value="<?= $key ?>"><?= $key != $oldKey ? $day : ""; ?></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-from" name="<?= $key . $counter ?>[]" onchange="setTardy('<?= $key ?>')" value="<?= $from ?>"></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-to" name="<?= $key . $counter ?>[]" onchange="setAbsentUnderTime('<?= $key ?>')" value="<?= $to ?>"></td>
-                            <td style=" text-align: center;"><input type="time" id="<?= $key ?>-tardy" name="<?= $key . $counter ?>[]" value="<?= $tardy ?>" readonly></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-absent" name="<?= $key . $counter ?>[]" value="<?= $absent ?>" readonly></td>
-                            <td style="text-align: center;"><input type="time" id="<?= $key ?>-under-time" name="<?= $key . $counter ?>[]" value="<?= $under_time ?>" readonly></td>
+                            <td style="text-align: center;"><input class="form-control" type="hidden" id="<?= $key ?>-day" name="<?= $key . $counter ?>[]" value="<?= $key ?>"><?= $key != $oldKey ? $day : ""; ?></td>
+                            <td style="text-align: center;"><input class="form-control" type="time" id="<?= $key ?>-from" name="<?= $key . $counter ?>[]" onchange="setTardy('<?= $key ?>')" value="<?= $from ?>"></td>
+                            <td style="text-align: center;"><input class="form-control" type="time" id="<?= $key ?>-to" name="<?= $key . $counter ?>[]" onchange="setAbsentUnderTime('<?= $key ?>')" value="<?= $to ?>"></td>
+                            <td style=" text-align: center;"><input class="form-control" type="time" id="<?= $key ?>-tardy" name="<?= $key . $counter ?>[]" value="<?= $tardy ?>" readonly></td>
+                            <td style="text-align: center;"><input class="form-control" type="time" id="<?= $key ?>-absent" name="<?= $key . $counter ?>[]" value="<?= $absent ?>" readonly></td>
+                            <td style="text-align: center;"><input class="form-control" type="time" id="<?= $key ?>-under-time" name="<?= $key . $counter ?>[]" value="<?= $under_time ?>" readonly></td>
                             <td style="text-align: center;">
                                 <?php
                                 if ($key != $oldKey) {

@@ -36,9 +36,11 @@ class User extends CI_Controller
         if (isset($_SESSION['training_system'])) {
             $image = $this->getLastImage();
 
+            // $data['information'] = $this->User_->getUserInformation();
+
             $data = array(
                 "title" => " | My Profile",
-                "image" => $image
+                "information" => $this->User_->getUserInformation()
             );
 
             $this->load->view('template/header', $data);
@@ -50,6 +52,11 @@ class User extends CI_Controller
         } else {
             redirect(base_url('index.php/Page/index'));
         }
+    }
+
+    public function updateUserInformation()
+    {
+        $this->User_->updateUserInformation();
     }
 
     public function logged_session()

@@ -10,31 +10,31 @@
         </div>
     </div>
     <div class="container bg-light p-3">
-        <form action="" method="post">
+        <form id="form-information" method="post">
             <div class="container">
                 <div class="row p-2">
                     <div class="form-group col-6">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email">
+                        <input type="email" class="form-control" name="email" id="email" value="<?= $information[0]['email'] ?>">
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col-4">
                         <label for="first-name">First Name</label>
-                        <input type="text" class="form-control" name="first-name" id="first-name">
+                        <input type="text" class="form-control" name="first-name" id="first-name" value="<?= $information[0]['first_name'] ?>">
                     </div>
                     <div class="col-4">
                         <label for="middle-name">Middle Name</label>
-                        <input type="text" class="form-control" name="middle-name" id="middle-name">
+                        <input type="text" class="form-control" name="middle-name" id="middle-name" value="<?= $information[0]['middle_name'] ?>">
                     </div>
                     <div class="col-4">
                         <label for="last-name">Last Name</label>
-                        <input type="text" class="form-control" name="last-name" id="last-name">
+                        <input type="text" class="form-control" name="last-name" id="last-name" value="<?= $information[0]['last_name'] ?>">
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col-12">
-                        <button type="button" class="form-control btn-info">Update Information</button>
+                        <button type="button" class="form-control btn-info" onclick="updateUserInformation()">Update Information</button>
                     </div>
                 </div>
             </div>

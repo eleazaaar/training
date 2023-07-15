@@ -1,4 +1,7 @@
 <?php
+
+use Mpdf\Http\Response;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_ extends CI_Model
@@ -10,6 +13,34 @@ class User_ extends CI_Model
         $this->load->library('session');
         $this->load->library('user_agent');
         $this->load->helper('url', 'form');
+    }
+
+    public function getUserInformation()
+    {
+        $query = $this->db->query("SELECT email, first_name, middle_name, last_name FROM user WHERE id = " . $_SESSION['user_id']);
+
+        return $query->result_array();
+    }
+
+    public function updateUserInformation()
+    {
+        // print_r($this->input->post());
+        $response = "";
+
+        try {
+            $this->db->query("UPDATE user 
+        SET email = '" . $this->input->post('email') . "', 
+        first_name = '" . $this->input->post('first-name') . "', 
+        middle_name = '" . $this->input->post('middle-name') . "',
+        last_name = '" . $this->input->post('last-name') . "'
+        WHERE id = " . $_SESSION['user_id']);
+
+            $response =  "Success";
+        } catch (\Throwable $th) {
+            $response = $th;
+        } finally {
+            echo $response;
+        }
     }
 
     public function getUserDataForLoggedSession()
