@@ -20,9 +20,16 @@
                     <label for="date-to">Date To</label>
                     <input class="form-control" type="date" name="date-to" id="date-to">
                 </div>
-                <div class="col-2">
-                    <label for="print">.</label>
-                    <input type="submit" name="print" id="print" value="Print Report" class="form-control btn-dark">
+                <div class="col-4">
+                    <label for="print">Print Report</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="submit" name="pdf" id="pdf" value="PDF" class="form-control btn-outline-warning">
+                        </div>
+                        <div class="col-6">
+                            <input type="submit" name="excel" id="excel" value="Excel" class="form-control btn-outline-success" disabled>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
