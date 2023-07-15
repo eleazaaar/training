@@ -24,16 +24,15 @@ class User_ extends CI_Model
 
     public function updateUserInformation()
     {
-        // print_r($this->input->post());
         $response = "";
 
         try {
             $this->db->query("UPDATE user 
-        SET email = '" . $this->input->post('email') . "', 
-        first_name = '" . $this->input->post('first-name') . "', 
-        middle_name = '" . $this->input->post('middle-name') . "',
-        last_name = '" . $this->input->post('last-name') . "'
-        WHERE id = " . $_SESSION['user_id']);
+                SET email = '" . $this->input->post('email') . "', 
+                first_name = '" . $this->input->post('first-name') . "', 
+                middle_name = '" . $this->input->post('middle-name') . "', 
+                last_name = '" . $this->input->post('last-name') . "' 
+                WHERE id = " . $_SESSION['user_id']);
 
             $response =  "Success";
         } catch (\Throwable $th) {
@@ -205,7 +204,7 @@ class User_ extends CI_Model
         $this->db->order_by('time_in', 'desc');
         $query = $this->db->get_where('user_data', $id, 1);
         if ($result = $query->row()) {
-            return $result->time_in;
+            return $result->time_out;
         }
     }
 

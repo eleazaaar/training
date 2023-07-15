@@ -37,6 +37,12 @@
         }
     });
 
+    $("#new_email, #new_password").on("keypress", function(event) {
+        if (event.which == 13) {
+            register();
+        }
+    });
+
     function login() {
         $.ajax({
                 method: 'POST',
@@ -67,11 +73,11 @@
                 method: 'POST',
                 url: '<?php echo site_url(); ?>/Register/registerUser',
                 data: {
-                    email: $('#email').val(),
+                    email: $('#new_email').val(),
                     first_name: $('#first_name').val(),
                     middle_name: $('#middle_name').val(),
                     last_name: $('#last_name').val(),
-                    password: $('#password').val()
+                    password: $('#new_password').val()
                 }
             })
             .done(function(response) {

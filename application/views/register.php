@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="form-group col-12">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" required />
+                    <input type="email" id="new_email" name="new_email" class="form-control" required />
                 </div>
             </div>
             <!-- First Name input -->
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="form-group col-12">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" required />
+                    <input type="password" id="new_password" name="new_password" class="form-control" required />
                 </div>
             </div>
             <!-- Submit button -->
