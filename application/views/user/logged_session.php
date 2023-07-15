@@ -11,14 +11,20 @@
     </div>
     <div class="container bg-light p-3">
         <form action="<?php echo site_url(); ?>/User/generatePDFLoggedSession" method="post" target="_blank">
-
-            <label for="date-from">Date From</label>
-            <input type="date" name="date-from" id="date-from">
-
-            <label for="date-to">Date To</label>
-            <input type="date" name="date-to" id="date-to">
-
-            <button type="submit" class="btn btn-dark m-3">Print</button>
+            <div class="row mb-4">
+                <div class="col-3">
+                    <label for="date-from">Date From</label>
+                    <input class="form-control" type="date" name="date-from" id="date-from">
+                </div>
+                <div class="col-3">
+                    <label for="date-to">Date To</label>
+                    <input class="form-control" type="date" name="date-to" id="date-to">
+                </div>
+                <div class="col-2">
+                    <label for="print">.</label>
+                    <input type="submit" name="print" id="print" value="Print Report" class="form-control btn-dark">
+                </div>
+            </div>
         </form>
         <table class="table table-bordered table-striped dataTable dtr-inline p-3" id="table-logged-session">
             <thead>
