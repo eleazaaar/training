@@ -205,7 +205,7 @@
         });
     }
 
-    counter = 7;
+    counter = 15;
 
     function addDay(day) {
         markup = '<tr>' +
