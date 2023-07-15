@@ -177,6 +177,13 @@ class User_ extends CI_Model
         return "hihi";
     }
 
+    public function getSchedule()
+    {
+        $user = array("user_id" => $_SESSION['user_id']);
+        $query = $this->db->get_where('user_schedule', $user);
+        return $query->result();
+    }
+
     public function getDateToday()
     {
         return date('Y-m-d H:i:s');

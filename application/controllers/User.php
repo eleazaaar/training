@@ -168,7 +168,10 @@ class User extends CI_Controller
     {
         $this->load->library('session');
 
-        $data = ["title" => " | Attendance"];
+        $data = [
+            "title" => " | Attendance",
+            "schedule" => $this->User_->getSchedule()
+        ];
 
         if (isset($_SESSION['training_system'])) {
             $this->load->view('template/header', $data);

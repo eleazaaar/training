@@ -26,15 +26,10 @@
                     <?php
                     $days = array("mon" => "Monday", "tue" => "Tuesday", "wed" => "Wednesday", "thu" => "Thursday", "fri" => "Friday", "sat" => "Saturday", "sun" => "Sunday");
 
-                    $this->load->database();
-                    $user = array("user_id" => $_SESSION['user_id']);
-                    $query = $this->db->get_where('user_schedule', $user);
-                    $result = $query->result();
-
                     $oldKey = "";
                     $counter = 1;
 
-                    foreach ($result as $value) {
+                    foreach ($schedule as $value) {
                         $oldKey = $key ?? "";
                         $key = $value->day;
                         $day = $days[$key];
